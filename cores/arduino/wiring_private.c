@@ -19,47 +19,32 @@
 #include "Arduino.h"
 #include "wiring_private.h"
 
-int pinPeripheral( uint32_t ulPin, EPioType ulPeripheral )
+int pinPeripheral(uint32_t pin, EPioType peripheral)
 {
+  const PinDescription ppp = g_APinDescription[pin];
+
   // Handle the case the pin isn't usable as PIO
-  if ( g_APinDescription[ulPin].ulPinType == PIO_NOT_A_PIN )
-  {
-    return -1 ;
+  if (ppp.ulPinType == PIO_NOT_A_PIN) {
+    return -1;
   }
 
-  switch ( ulPeripheral )
+  // Disable peripheral muxing, done in pinMode
+  //PORT->Group[ppp.ulPort].PINCFG[ppp.ulPin].bit.PMUXEN = 0;
+
+  switch (peripheral)
   {
     case PIO_DIGITAL:
+      // XXX: do we have to do something as all cases are covered?
+      break;
     case PIO_INPUT:
+      pinMode(pin, INPUT);
+      break;
     case PIO_INPUT_PULLUP:
+      pinMode(pin, INPUT_PULLUP);
+      break;
     case PIO_OUTPUT:
-      // Disable peripheral muxing, done in pinMode
-//			PORT->Group[g_APinDescription[ulPin].ulPort].PINCFG[g_APinDescription[ulPin].ulPin].bit.PMUXEN = 0 ;
-
-      // Configure pin mode, if requested
-      if ( ulPeripheral == PIO_INPUT )
-      {
-        pinMode( ulPin, INPUT ) ;
-      }
-      else
-      {
-        if ( ulPeripheral == PIO_INPUT_PULLUP )
-        {
-          pinMode( ulPin, INPUT_PULLUP ) ;
-        }
-        else
-        {
-          if ( ulPeripheral == PIO_OUTPUT )
-          {
-            pinMode( ulPin, OUTPUT ) ;
-          }
-          else
-          {
-            // PIO_DIGITAL, do we have to do something as all cases are covered?
-          }
-        }
-      }
-    break ;
+      pinMode(pin, OUTPUT);
+      break;
 
     case PIO_ANALOG:
     case PIO_SERCOM:
@@ -72,47 +57,43 @@ int pinPeripheral( uint32_t ulPin, EPioType ulPeripheral )
 #if 0
       // Is the pio pin in the lower 16 ones?
       // The WRCONFIG register allows update of only 16 pin max out of 32
-      if ( g_APinDescription[ulPin].ulPin < 16 )
+      if (ppp.ulPin < 16)
       {
-        PORT->Group[g_APinDescription[ulPin].ulPort].WRCONFIG.reg = PORT_WRCONFIG_WRPMUX | PORT_WRCONFIG_PMUXEN | PORT_WRCONFIG_PMUX( ulPeripheral ) |
-                                                                    PORT_WRCONFIG_WRPINCFG |
-                                                                    PORT_WRCONFIG_PINMASK( g_APinDescription[ulPin].ulPin ) ;
+        PORT->Group[ppp.ulPort].WRCONFIG.reg = PORT_WRCONFIG_WRPMUX | PORT_WRCONFIG_PMUXEN | PORT_WRCONFIG_PMUX(peripheral) |
+                                               PORT_WRCONFIG_WRPINCFG |
+                                               PORT_WRCONFIG_PINMASK(ppp.ulPin);
       }
       else
       {
-        PORT->Group[g_APinDescription[ulPin].ulPort].WRCONFIG.reg = PORT_WRCONFIG_HWSEL |
-                                                                    PORT_WRCONFIG_WRPMUX | PORT_WRCONFIG_PMUXEN | PORT_WRCONFIG_PMUX( ulPeripheral ) |
-                                                                    PORT_WRCONFIG_WRPINCFG |
-                                                                    PORT_WRCONFIG_PINMASK( g_APinDescription[ulPin].ulPin - 16 ) ;
+        PORT->Group[ppp.ulPort].WRCONFIG.reg = PORT_WRCONFIG_HWSEL |
+                                               PORT_WRCONFIG_WRPMUX | PORT_WRCONFIG_PMUXEN | PORT_WRCONFIG_PMUX(peripheral) |
+                                               PORT_WRCONFIG_WRPINCFG |
+                                               PORT_WRCONFIG_PINMASK(ppp.pin - 16);
       }
 #else
-      if ( g_APinDescription[ulPin].ulPin & 1 ) // is pin odd?
-      {
-        uint32_t temp ;
+      if (ppp.ulPin & 1) {
+        // Odd pin
 
-        // Get whole current setup for both odd and even pins and remove odd one
-        temp = (PORT->Group[g_APinDescription[ulPin].ulPort].PMUX[g_APinDescription[ulPin].ulPin >> 1].reg) & PORT_PMUX_PMUXE( 0xF ) ;
-        // Set new muxing
-        PORT->Group[g_APinDescription[ulPin].ulPort].PMUX[g_APinDescription[ulPin].ulPin >> 1].reg = temp|PORT_PMUX_PMUXO( ulPeripheral ) ;
-        // Enable port mux
-        PORT->Group[g_APinDescription[ulPin].ulPort].PINCFG[g_APinDescription[ulPin].ulPin].reg |= PORT_PINCFG_PMUXEN ;
-      }
-      else // even pin
-      {
-        uint32_t temp ;
+        // Get whole current setup for both odd and even pins and replace the odd one
+        uint32_t temp = (PORT->Group[ppp.ulPort].PMUX[ppp.ulPin >> 1].reg) & PORT_PMUX_PMUXE(0xF);
+        PORT->Group[ppp.ulPort].PMUX[ppp.ulPin >> 1].reg = temp | PORT_PMUX_PMUXO(peripheral);
+      } else {
+        // Even pin
 
-        temp = (PORT->Group[g_APinDescription[ulPin].ulPort].PMUX[g_APinDescription[ulPin].ulPin >> 1].reg) & PORT_PMUX_PMUXO( 0xF ) ;
-        PORT->Group[g_APinDescription[ulPin].ulPort].PMUX[g_APinDescription[ulPin].ulPin >> 1].reg = temp|PORT_PMUX_PMUXE( ulPeripheral ) ;
-        PORT->Group[g_APinDescription[ulPin].ulPort].PINCFG[g_APinDescription[ulPin].ulPin].reg |= PORT_PINCFG_PMUXEN ; // Enable port mux
+        // Get whole current setup for both odd and even pins and replace the even one
+        uint32_t temp = (PORT->Group[ppp.ulPort].PMUX[ppp.ulPin >> 1].reg) & PORT_PMUX_PMUXO(0xF);
+        PORT->Group[ppp.ulPort].PMUX[ppp.ulPin >> 1].reg = temp | PORT_PMUX_PMUXE(peripheral);
       }
+
+      // Enable port mux
+      PORT->Group[ppp.ulPort].PINCFG[ppp.ulPin].reg |= PORT_PINCFG_PMUXEN; // Enable port mux
 #endif
-    break ;
+      break;
 
     case PIO_NOT_A_PIN:
-      return -1l ;
-    break ;
+      return -1l;
   }
 
-  return 0l ;
+  return 0l;
 }
 
