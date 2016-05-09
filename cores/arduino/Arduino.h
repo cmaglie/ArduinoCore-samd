@@ -20,6 +20,8 @@
 #ifndef Arduino_h
 #define Arduino_h
 
+#include "api/ArduinoAPI.h"
+
 #include <stdbool.h>
 #include <stdint.h>
 #include <stdlib.h>
