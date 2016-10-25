@@ -22,7 +22,7 @@
 
 #include <stdint.h>
 #include "Printable.h"
-#include "WString.h"
+#include "api/String.h"
 
 // A class to make it easier to handle and pass around IP addresses
 

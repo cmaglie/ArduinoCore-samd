@@ -69,7 +69,6 @@ void loop( void ) ;
 // The following headers are for C++ only compilation
 #ifdef __cplusplus
   #include "WCharacter.h"
-  #include "WString.h"
   #include "Tone.h"
   #include "WMath.h"
   #include "HardwareSerial.h"
