@@ -17,5 +17,5 @@
 */
 
 // Default implementaion of dtostrf
-#include "api/avr/dtostrf.c.impl"
+#include "api/deprecated-avr-comp/avr/dtostrf.c.impl"
 
