@@ -18,7 +18,7 @@
 
 #pragma once
 
-#include "HardwareSerial.h"
+#include "api/HardwareSerial.h"
 #include "SERCOM.h"
 #include "RingBuffer.h"
 

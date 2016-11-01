@@ -36,6 +36,6 @@ int pinPeripheral( uint32_t ulPin, EPioType ulPeripheral );
 #ifdef __cplusplus
 } // extern "C"
 
-#include "HardwareSerial.h"
+//#include "HardwareSerial.h"
 
 #endif
