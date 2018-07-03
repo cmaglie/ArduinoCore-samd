@@ -265,6 +265,9 @@ public:
 					return 0;
 				}
 			}
+
+			Serial.print("R -> "); dump();
+
 			// when ready0==true the buffer is not being filled and last0 is constant
 			for (; i<len && first0 < last0; i++) {
 				data[i] = data0[first0++];
@@ -286,6 +289,9 @@ public:
 					return 0;
 				}
 			}
+
+			Serial.print("R -> "); dump();
+
 			// when ready1==true the buffer is not being filled and last1 is constant
 			for (; i<len && first1 < last1; i++) {
 				data[i] = data1[first1++];
@@ -302,7 +308,22 @@ public:
 				}
 			}
 		}
+		Serial.print(i); Serial.print(" <- "); dump(); Serial.println();
 		return i;
+	}
+
+	inline void dump() {
+		Serial.print(incoming==0?">":" ");
+		Serial.print(first0); Serial.print("/"); Serial.print(last0);
+		Serial.print(current==0?">":" ");
+		Serial.print(ready0?"Y":"N"); Serial.print(" ");
+
+		Serial.print(incoming==1?">":" ");
+		Serial.print(first1); Serial.print("/"); Serial.print(last1);
+		Serial.print(current==1?">":" ");
+		Serial.print(ready1?"Y":"N"); Serial.print(" ");
+
+		Serial.print(notify?"!":"."); Serial.println();
 	}
 
 	virtual void handleEndpoint()
@@ -320,6 +341,8 @@ public:
 				return;
 			}
 
+			Serial.print(received); Serial.print(" -> "); dump();
+
 			// Update counters and swap banks for non-ZLP's
 			if (incoming == 0) {
 				last0 = received;
@@ -329,6 +352,7 @@ public:
 					ready0 = true;
 					if (ready1) {
 						notify = true;
+						Serial.print("  <- "); dump(); Serial.println();
 						return;
 					}
 					notify = false;
@@ -341,12 +365,14 @@ public:
 					ready1 = true;
 					if (ready0) {
 						notify = true;
+						Serial.print("  <- "); dump(); Serial.println();
 						return;
 					}
 					notify = false;
 				}
 			}
 			release();
+			Serial.print("  <- "); dump(); Serial.println();
 		}
 	}
 
