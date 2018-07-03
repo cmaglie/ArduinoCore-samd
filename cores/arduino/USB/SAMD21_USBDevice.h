@@ -255,6 +255,7 @@ public:
 	virtual uint32_t recv(void *_data, uint32_t len)
 	{
 		uint8_t *data = reinterpret_cast<uint8_t *>(_data);
+		uint32_t i = 0;
 
 		// R/W: current, first0/1, ready0/1, notify
 		// R  : last0/1, data0/1
@@ -265,8 +266,7 @@ public:
 				}
 			}
 			// when ready0==true the buffer is not being filled and last0 is constant
-			uint32_t i;
-			for (i=0; i<len && first0 < last0; i++) {
+			for (; i<len && first0 < last0; i++) {
 				data[i] = data0[first0++];
 			}
 			if (first0 == last0) {
@@ -280,7 +280,6 @@ public:
 					}
 				}
 			}
-			return i;
 		} else {
 			synchronized {
 				if (!ready1) {
@@ -288,8 +287,7 @@ public:
 				}
 			}
 			// when ready1==true the buffer is not being filled and last1 is constant
-			uint32_t i;
-			for (i=0; i<len && first1 < last1; i++) {
+			for (; i<len && first1 < last1; i++) {
 				data[i] = data1[first1++];
 			}
 			if (first1 == last1) {
@@ -303,8 +301,8 @@ public:
 					}
 				}
 			}
-			return i;
 		}
+		return i;
 	}
 
 	virtual void handleEndpoint()
