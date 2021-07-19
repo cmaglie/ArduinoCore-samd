@@ -23,6 +23,7 @@ arduino_zero_edbg.upload_port.0.vid=0x03eb
 arduino_zero_edbg.upload_port.0.pid=0x2157
 
 arduino_zero_edbg.upload.tool=openocd
+arduino_zero_edbg.upload.tool.default=openocd
 arduino_zero_edbg.upload.protocol=sam-ba
 arduino_zero_edbg.upload.maximum_size=262144
 arduino_zero_edbg.upload.maximum_data_size=32768
@@ -66,6 +67,7 @@ arduino_zero_native.upload_port.3.vid=0x2341
 arduino_zero_native.upload_port.3.pid=0x024d
 
 arduino_zero_native.upload.tool=bossac
+arduino_zero_native.upload.tool.serial=bossac
 arduino_zero_native.upload.protocol=sam-ba
 arduino_zero_native.upload.maximum_size=262144
 arduino_zero_native.upload.maximum_data_size=32768
@@ -109,6 +111,7 @@ mkr1000.upload_port.3.vid=0x2341
 mkr1000.upload_port.3.pid=0x024e
 
 mkr1000.upload.tool=bossac
+mkr1000.upload.tool.serial=bossac
 mkr1000.upload.protocol=sam-ba
 mkr1000.upload.maximum_size=262144
 mkr1000.upload.maximum_data_size=32768
@@ -143,6 +146,7 @@ mkrzero.upload_port.1.vid=0x2341
 mkrzero.upload_port.1.pid=0x004f
 
 mkrzero.upload.tool=bossac
+mkrzero.upload.tool.serial=bossac
 mkrzero.upload.protocol=sam-ba
 mkrzero.upload.maximum_size=262144
 mkrzero.upload.maximum_data_size=32768
@@ -177,6 +181,7 @@ mkrwifi1010.upload_port.1.vid=0x2341
 mkrwifi1010.upload_port.1.pid=0x0054
 
 mkrwifi1010.upload.tool=bossac
+mkrwifi1010.upload.tool.serial=bossac
 mkrwifi1010.upload.protocol=sam-ba
 mkrwifi1010.upload.maximum_size=262144
 mkrwifi1010.upload.maximum_data_size=32768
@@ -212,6 +217,7 @@ nano_33_iot.upload_port.1.vid=0x2341
 nano_33_iot.upload_port.1.pid=0x0057
 
 nano_33_iot.upload.tool=bossac
+nano_33_iot.upload.tool.serial=bossac
 nano_33_iot.upload.protocol=sam-ba
 nano_33_iot.upload.maximum_size=262144
 nano_33_iot.upload.maximum_data_size=32768
@@ -246,6 +252,7 @@ mkrfox1200.upload_port.1.vid=0x2341
 mkrfox1200.upload_port.1.pid=0x0050
 
 mkrfox1200.upload.tool=bossac
+mkrfox1200.upload.tool.serial=bossac
 mkrfox1200.upload.protocol=sam-ba
 mkrfox1200.upload.maximum_size=262144
 mkrfox1200.upload.maximum_data_size=32768
@@ -280,6 +287,7 @@ mkrwan1300.upload_port.1.vid=0x2341
 mkrwan1300.upload_port.1.pid=0x0053
 
 mkrwan1300.upload.tool=bossac
+mkrwan1300.upload.tool.serial=bossac
 mkrwan1300.upload.protocol=sam-ba
 mkrwan1300.upload.maximum_size=262144
 mkrwan1300.upload.maximum_data_size=32768
@@ -314,6 +322,7 @@ mkrwan1310.upload_port.1.vid=0x2341
 mkrwan1310.upload_port.1.pid=0x0059
 
 mkrwan1310.upload.tool=bossac
+mkrwan1310.upload.tool.serial=bossac
 mkrwan1310.upload.protocol=sam-ba
 mkrwan1310.upload.maximum_size=262144
 mkrwan1310.upload.maximum_data_size=32768
@@ -348,6 +357,7 @@ mkrgsm1400.upload_port.1.vid=0x2341
 mkrgsm1400.upload_port.1.pid=0x0052
 
 mkrgsm1400.upload.tool=bossac
+mkrgsm1400.upload.tool.serial=bossac
 mkrgsm1400.upload.protocol=sam-ba
 mkrgsm1400.upload.maximum_size=262144
 mkrgsm1400.upload.maximum_data_size=32768
@@ -382,6 +392,7 @@ mkrnb1500.upload_port.1.vid=0x2341
 mkrnb1500.upload_port.1.pid=0x0055
 
 mkrnb1500.upload.tool=bossac
+mkrnb1500.upload.tool.serial=bossac
 mkrnb1500.upload.protocol=sam-ba
 mkrnb1500.upload.maximum_size=262144
 mkrnb1500.upload.maximum_data_size=32768
@@ -416,6 +427,7 @@ mkrvidor4000.upload_port.1.vid=0x2341
 mkrvidor4000.upload_port.1.pid=0x0056
 
 mkrvidor4000.upload.tool=bossacI
+mkrvidor4000.upload.tool.serial=bossacI
 mkrvidor4000.upload.protocol=sam-ba
 mkrvidor4000.upload.maximum_size=262144
 mkrvidor4000.upload.maximum_data_size=32768
@@ -449,6 +461,7 @@ adafruit_circuitplayground_m0.upload_port.0.pid=0x8018
 adafruit_circuitplayground_m0.upload_port.1.vid=0x239A
 adafruit_circuitplayground_m0.upload_port.1.pid=0x0018
 adafruit_circuitplayground_m0.upload.tool=bossac
+adafruit_circuitplayground_m0.upload.tool.serial=bossac
 adafruit_circuitplayground_m0.upload.protocol=sam-ba
 adafruit_circuitplayground_m0.upload.maximum_size=262144
 adafruit_circuitplayground_m0.upload.maximum_data_size=32768
@@ -479,6 +492,7 @@ mzero_pro_bl_dbg.pid.0=0x2111
 mzero_pro_bl_dbg.upload_port.0.vid=0x03eb
 mzero_pro_bl_dbg.upload_port.0.pid=0x2111
 mzero_pro_bl_dbg.upload.tool=openocd-withbootsize
+mzero_pro_bl_dbg.upload.tool.default=openocd-withbootsize
 mzero_pro_bl_dbg.upload.protocol=sam-ba
 mzero_pro_bl_dbg.upload.maximum_size=262144
 mzero_pro_bl_dbg.upload.maximum_data_size=32768
@@ -526,6 +540,7 @@ mzero_pro_bl.upload_port.2.pid=0x004f
 mzero_pro_bl.upload_port.3.vid=0x2a03
 mzero_pro_bl.upload_port.3.pid=0x804f
 mzero_pro_bl.upload.tool=avrdude
+mzero_pro_bl.upload.tool.serial=avrdude
 mzero_pro_bl.upload.protocol=stk500v2
 mzero_pro_bl.upload.maximum_size=262144
 mzero_pro_bl.upload.maximum_data_size=32768
@@ -572,6 +587,7 @@ mzero_bl.upload_port.2.pid=0x004e
 mzero_bl.upload_port.3.vid=0x2a03
 mzero_bl.upload_port.3.pid=0x804e
 mzero_bl.upload.tool=avrdude
+mzero_bl.upload.tool.serial=avrdude
 mzero_bl.upload.protocol=stk500v2
 mzero_bl.upload.maximum_size=262144
 mzero_bl.upload.maximum_data_size=32768
@@ -610,6 +626,7 @@ tian.upload_port.0.pid=0xEA70
 tian.upload_port.0.descriptor=Enhanced Com Port
 
 tian.upload.tool=avrdude
+tian.upload.tool.serial=avrdude
 #tian.upload.protocol=stk500v2
 tian.upload.protocol=wiring
 tian.upload.maximum_size=262144
